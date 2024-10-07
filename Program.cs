@@ -7,19 +7,21 @@ namespace ws_deadlock
     {
         public static async Task Main(string[] args)
         {
-            using (var client = new SioClient("https://sio-server/"))
+            using (var client = new SioClient("http://127.0.0.1:8000"))
             {
                 try
                 {
                     await client.InitializeConnection();
+                    
+                    Console.WriteLine("Post connect");
+                    
+                    await client.EmitAsync("foo", new object(){});
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                     throw;
                 }
-
-                Console.WriteLine("Post connect");
             }
         }
     }
